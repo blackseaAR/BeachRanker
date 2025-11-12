@@ -4,7 +4,129 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BeachRanker - Your Guide to the Best Beaches</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Общи стилове (можеш да ги преместиш в style.css, ако искаш) */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            line-height: 1.6;
+        }
+        header {
+            background: #003366;
+            color: white;
+            padding: 1rem 0;
+        }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        nav ul {
+            display: flex;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        nav ul li a {
+            color: white;
+            margin-left: 1.5rem;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        nav ul li a:hover {
+            color: #a0c4ff;
+        }
+        .hero {
+            text-align: center;
+            padding: 4rem 1rem;
+            background: #f0f7ff;
+        }
+        .hero h1 {
+            font-size: 2.5rem;
+            color: #003366;
+            margin-bottom: 1rem;
+        }
+        .hero p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+        .btn {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.8rem 2rem;
+            background: #003366;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: background 0.3s ease;
+        }
+        .btn:hover {
+            background: #0056b3;
+        }
+        .about, .contact, .map-section {
+            padding: 4rem 1rem;
+            text-align: center;
+            max-width: 960px; /* Увеличена ширина за по-добро центриране */
+            margin: 0 auto;
+        }
+        .map-section h2 {
+            margin-bottom: 2rem;
+            color: #003366;
+        }
+        .map-container {
+            width: 100%;
+            height: 600px; /* Фиксирана височина за iframe */
+            border-radius: 8px;
+            overflow: hidden; /* За да се скрият частите извън рамката */
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            position: relative; /* За да може iframe да се позиционира абсолютно */
+        }
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+        .contact form {
+            max-width: 500px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .contact input[type="text"],
+        .contact input[type="email"],
+        .contact textarea {
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        .contact textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+        .contact .btn {
+            align-self: center;
+            width: auto;
+        }
+        footer {
+            text-align: center;
+            padding: 1.5rem;
+            background: #003366;
+            color: white;
+            margin-top: 4rem;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -33,7 +155,17 @@
     <section id="map" class="map-section">
         <h2>Our Interactive Beach Map</h2>
         <div class="map-container">
-            <iframe src="https://www.google.com/maps/d/u/0/embed?mid=1aAbL4FTeK32VUDdywx12uYOxUsOuY5o&ehbc=2E312F&noprof=1" width="100%" height="600" frameborder="0" style="border:0" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+            <!-- Замени YOUR_API_KEY с твоя ключ. latitude и longitude са за центъра на картата, zoom е нивото на приближение. -->
+            <iframe
+                src="https://www.google.com/maps/embed/v1/view?key=YOUR_API_KEY&center=43.2141,27.9147&zoom=10&maptype=roadmap"
+                width="100%"
+                height="100%"
+                frameborder="0"
+                style="border:0;"
+                allowfullscreen=""
+                aria-hidden="false"
+                tabindex="0">
+            </iframe>
         </div>
     </section>
 
