@@ -1,151 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>BeachRanking.info</title>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #f5f7fa;
-    }
-    #map {
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-    }
-    .search-box {
-      position: absolute;
-      top: 15px;
-      left: 15px;
-      z-index: 1000;
-      background: white;
-      padding: 12px;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-      width: 300px;
-    }
-    .search-box input, .search-box select {
-      width: 100%;
-      padding: 8px;
-      margin: 6px 0;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      box-sizing: border-box;
-    }
-    .label {
-      background: white;
-      padding: 12px;
-      border-radius: 8px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      font-size: 14px;
-      max-width: 280px;
-    }
-    .label h3 {
-      margin: 0 0 8px 0;
-      color: #2c3e50;
-    }
-    .label p {
-      margin: 4px 0;
-      color: #34495e;
-    }
-    .label .score {
-      font-weight: bold;
-      color: #e67e22;
-    }
-    .label .country {
-      font-size: 12px;
-      color: #7f8c8d;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BeachRanker - Your Guide to the Best Beaches</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="search-box">
-    <input type="text" id="searchInput" placeholder="Search beaches..." />
-    <select id="countryFilter">
-      <option value="">All countries</option>
-    </select>
-  </div>
-  <div id="map"></div>
+    <header>
+        <nav>
+            <div class="logo">BeachRanker</div>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#map">Our Map</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
 
-  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-  <script>
-    const map = L.map('map').setView([38.0, 22.0], 5);
-    L.tileLayer('[https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',](https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',) {
-      attribution: '&copy; OpenStreetMap contributors'
-    }).addTo(map);
+    <section id="home" class="hero">
+        <h1>Discover Your Perfect Beach</h1>
+        <p>Explore detailed rankings, photos, and reviews of beaches worldwide.</p>
+        <a href="#map" class="btn">View Our Map</a>
+    </section>
 
-    const beachData = [];
-    const countrySet = new Set();
+    <section id="about" class="about">
+        <h2>About BeachRanker</h2>
+        <p>BeachRanker is dedicated to helping you find the best beaches for your next vacation. We provide comprehensive data, user reviews, and beautiful imagery to ensure you make the most informed decision.</p>
+    </section>
 
-    const searchInput = document.getElementById('searchInput');
-    const countryFilter = document.getElementById('countryFilter');
+    <section id="map" class="map-section">
+        <h2>Our Interactive Beach Map</h2>
+        <div class="map-container">
+            <iframe src="https://www.google.com/maps/d/u/0/embed?mid=1aAbL4FTeK32VUDdywx12uYOxUsOuY5o&ehbc=2E312F" width="100%" height="600" frameborder="0" style="border:0" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+        </div>
+    </section>
 
-    fetch('[https://docs.google.com/spreadsheets/d/e/2PACX-1vQzmQpDybbAJ-3yDMHg3_q-F1zeULHQqARUR_BYdTCiktCQXECkW2lPCdzGS9tpCn-esUaIBRptGu9D/pub?output=csv'](https://docs.google.com/spreadsheets/d/e/2PACX-1vQzmQpDybbAJ-3yDMHg3_q-F1zeULHQqARUR_BYdTCiktCQXECkW2lPCdzGS9tpCn-esUaIBRptGu9D/pub?output=csv'))
-      .then(response => response.text())
-      .then(data => {
-        const rows = data.split('\n').slice(1);
-        rows.forEach(row => {
-          const cols = row.split(',');
-          if (cols.length < 5 || !cols[3] || !cols[4]) return;
-          const name = cols[0].replace(/^"|"$/g, '');
-          const country = cols[1].replace(/^"|"$/g, '');
-          const score = cols[2] ? cols[2].replace(/^"|"$/g, '') : '?';
-          const lat = parseFloat(cols[3]);
-          const lng = parseFloat(cols[4]);
+    <section id="contact" class="contact">
+        <h2>Contact Us</h2>
+        <p>Have questions or suggestions? We'd love to hear from you!</p>
+        <form>
+            <input type="text" placeholder="Your Name">
+            <input type="email" placeholder="Your Email">
+            <textarea placeholder="Your Message"></textarea>
+            <button type="submit" class="btn">Send Message</button>
+        </form>
+    </section>
 
-          if (isNaN(lat) || isNaN(lng)) return;
-
-          beachData.push({ name, country, score, lat, lng });
-          countrySet.add(country);
-        });
-
-        Array.from(countrySet).sort().forEach(country => {
-          const option = document.createElement('option');
-          option.value = country;
-          option.textContent = country;
-          countryFilter.appendChild(option);
-        });
-
-        renderMarkers(beachData);
-      });
-
-    function renderMarkers(data) {
-      map.eachLayer(layer => {
-        if (layer.options && layer.options.pane === 'markerPane') {
-          map.removeLayer(layer);
-        }
-      });
-      data.forEach(beach => {
-        const marker = L.marker([beach.lat, beach.lng]).addTo(map);
-        const popupContent = `
-          <div class="label">
-            <h3>${beach.name}</h3>
-            <p><strong>Score:</strong> <span class="score">${beach.score}</span></p>
-            <p class="country">${beach.country}</p>
-          </div>
-        `;
-        marker.bindPopup(popupContent);
-      });
-    }
-
-    searchInput.addEventListener('input', filterBeaches);
-    countryFilter.addEventListener('change', filterBeaches);
-
-    function filterBeaches() {
-      const query = searchInput.value.toLowerCase();
-      const country = countryFilter.value;
-      const filtered = beachData.filter(beach => {
-        const matchesSearch = beach.name.toLowerCase().includes(query);
-        const matchesCountry = !country || beach.country === country;
-        return matchesSearch && matchesCountry;
-      });
-      renderMarkers(filtered);
-    }
-  </script>
+    <footer>
+        <p>&copy; 2025 BeachRanker. All rights reserved.</p>
+    </footer>
 </body>
 </html>
