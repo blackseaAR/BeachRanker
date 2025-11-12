@@ -1,0 +1,2 @@
+# BeachRanker
+Beach characteristics database
